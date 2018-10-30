@@ -19,9 +19,38 @@ void ATankPlayerController::BeginPlay()
 
 }
 
+
+
+void ATankPlayerController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	AimTowardCrosshair();
+
+
+}
+
 ATank* ATankPlayerController::GetControlledTank() const
 {
 	return Cast<ATank>(GetPawn());
+}
+
+//Turn the barrel towards the crosshair in the UI
+void ATankPlayerController::AimTowardCrosshair()
+{
+	if (!GetControlledTank()) { return; }
+
+	FVector HitLocation; //OUT Parameter
+	if (GetSightRayHitLocation(HitLocation))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *(HitLocation.ToString()));
+	}
+}
+
+bool ATankPlayerController::GetSightRayHitLocation(FVector &OutHitLocation) const
+{
+	OutHitLocation = FVector(1.0);
+	return true;
 }
 
 
