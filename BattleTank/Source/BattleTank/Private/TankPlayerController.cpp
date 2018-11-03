@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Public/TankPlayerController.h"
+#include "Engine/World.h"
 #include "./BattleTank.h"
 
 void ATankPlayerController::BeginPlay()
@@ -24,10 +25,7 @@ void ATankPlayerController::BeginPlay()
 void ATankPlayerController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 	AimTowardCrosshair();
-
-
 }
 
 ATank* ATankPlayerController::GetControlledTank() const
