@@ -18,6 +18,9 @@ class BATTLETANK_API ATank : public APawn
 public:
 	void AimAt(FVector HitLocation, float LaunchSpeed);
 
+	UFUNCTION(BlueprintCallable, Category = Firing)
+	void Fire();
+
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetBarrelReference(UTankBarrel *BarrelToSet);
 
@@ -25,7 +28,7 @@ public:
 	void SetTurretReference(UTankTurret *TurretToSet);
 
 	UPROPERTY(EditAnywhere, Category = Firing)
-	float LaunchSpeed = 100000; //Starting value of 1000 m/s
+	float LaunchSpeed = 4000; //Starting value of 1000 m/s
 
 protected:
 	UTankAimingComponent *TankAimingComponent = nullptr;
