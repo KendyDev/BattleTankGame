@@ -25,12 +25,20 @@ void UTankMovementComponent::IntendRotateClockwise(float Throw)
 	RightTrack->SetThrottle(-Throw);
 }
 
-void UTankMovementComponent::RequestDirectMove(const FVector & MoveVelocity, bool bForceMaxSpeed)
+void UTankMovementComponent::RequestDirectMove(const FVector &MoveVelocity, bool bForceMaxSpeed)
 {
 	//Not calling super as we are completly overriding the parent function
-	auto TankName = GetOwner()->GetName();
-	auto TankMoveVelocity = MoveVelocity.ToString();
-	UE_LOG(LogTemp, Warning, TEXT("%s moving towards %f direction"), *TankName, *TankMoveVelocity)
+	//Dot product of the two vector to get the direction
+	auto TankFoward = GetOwner()->GetActorForwardVector().GetSafeNormal();
+	auto AIForwardIntention = MoveVelocity.GetSafeNormal();
+	auto DotProduct = FVector::DotProduct(TankFoward, AIForwardIntention);
+
+	IntendMoveFoward(DotProduct);
+
+	auto CrossProduct = FVector::CrossProduct(TankFoward, AIForwardIntention);
+	IntendRotateClockwise(CrossProduct.Z);
+	
+	UE_LOG(LogTemp, Warning, TEXT("Right: %f, Foward: %f "), CrossProduct.Z, DotProduct)
 }
 
 
