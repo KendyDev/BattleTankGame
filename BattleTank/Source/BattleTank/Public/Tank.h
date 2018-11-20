@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright KendyDev.
 
 #pragma once
 
@@ -8,7 +8,6 @@
 
 class UTankBarrel;
 class UTankAimingComponent;
-class UTankMovementComponent;
 class AProjectile;
 
 UCLASS()
@@ -27,12 +26,6 @@ public:
 	
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float ReloadTimeInSeconds = 3;
-	
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetBarrelReference(UTankBarrel *BarrelToSet);
-
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetTurretReference(UTankTurret *TurretToSet);
 
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	TSubclassOf<AProjectile> ProjectileBlueprint;
@@ -40,10 +33,8 @@ public:
 	
 
 protected:
-	UTankAimingComponent *TankAimingComponent = nullptr;
-
 	UPROPERTY(BlueprintReadOnly)
-	UTankMovementComponent *TankMovementComponent = nullptr;
+	UTankAimingComponent *TankAimingComponent = nullptr;
 
 private:
 
@@ -51,13 +42,10 @@ private:
 	ATank();
 
 	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	 void BeginPlay() override;
 
 	//Local barrel reference for spawning projectile
-	UTankBarrel* Barrel = nullptr;
+	UTankBarrel* Barrel = nullptr; //TODO remove
 
 	double LastFireTime = 0.0;
 };

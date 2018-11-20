@@ -12,7 +12,7 @@ void UTankMovementComponent::Initialise(UTankTrack *LeftTrackToSet, UTankTrack *
 
 void UTankMovementComponent::IntendMoveFoward(float Throw)
 {
-	if (!LeftTrack || !RightTrack) { return; }
+	if (!ensure(LeftTrack && RightTrack)) { return; }
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
 }
@@ -20,7 +20,7 @@ void UTankMovementComponent::IntendMoveFoward(float Throw)
 void UTankMovementComponent::IntendRotateClockwise(float Throw)
 {
 
-	if (!LeftTrack || !RightTrack) { return; }
+	if (!ensure(LeftTrack && RightTrack)) { return; }
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(-Throw);
 }
@@ -38,7 +38,7 @@ void UTankMovementComponent::RequestDirectMove(const FVector &MoveVelocity, bool
 	auto CrossProduct = FVector::CrossProduct(TankFoward, AIForwardIntention);
 	IntendRotateClockwise(CrossProduct.Z);
 	
-	UE_LOG(LogTemp, Warning, TEXT("Right: %f, Foward: %f "), CrossProduct.Z, DotProduct)
+	/*UE_LOG(LogTemp, Warning, TEXT("Right: %f, Foward: %f "), CrossProduct.Z, DotProduct)*/
 }
 
 

@@ -8,6 +8,17 @@
 #include "Components/StaticMeshComponent.h"
 #include "TankAimingComponent.generated.h"
 
+
+//enum for aiming state
+UENUM()
+enum class  EFiringStatus : uint8
+{
+	Reloading,
+	Aiming,
+	Locked
+};
+
+
 //Foward Declaration
 class UTankBarrel; 
 class UTankTurret;
@@ -19,23 +30,25 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:	
-	// Sets default values for this component's properties
-	UTankAimingComponent();
-
-	//Barrel that we are gonna set to the tank
-	void SetBarrelReference(UTankBarrel *BarrelToSet);
-
-	//Turret that we are going to set to the tank
-	void SetTurretReference(UTankTurret *TurretToSet);
-
-	//TODO add SetTurretReference
+	//Initialise Tank Aiming component
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	void Initialise(UTankBarrel *BarrelToSet, UTankTurret *TurretToSet);
 
 	void AimAt(FVector HitLocation, float LaunchSpeed);
 
+protected:
+	UPROPERTY(BlueprintReadOnly, Category = "State")
+	EFiringStatus FiringState = EFiringStatus::Aiming;
+
 private:
+	// Sets default values for this component's properties
+	UTankAimingComponent();
+
 	UTankBarrel *Barrel = nullptr;
 	UTankTurret *Turret = nullptr;
 
 	void MoveBarrel(FVector AimDirection);
+
+
 	
 };

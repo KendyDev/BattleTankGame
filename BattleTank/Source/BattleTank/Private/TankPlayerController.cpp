@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Public/TankPlayerController.h"
+#include "TankAimingComponent.h"
 #include "./BattleTank.h"
 #include "Tank.h"
 #include "Engine/World.h"
@@ -8,7 +9,17 @@
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	ATank* MainTank = GetControlledTank();
+	//ATank* MainTank = GetControlledTank();
+	auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+
+	if(ensure(AimingComponent))
+	{
+		FoundAimingComponent(AimingComponent);
+	}
+	else 
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Player Controller can't find aiming component"))
+	}
 }
 
 
@@ -26,7 +37,7 @@ ATank* ATankPlayerController::GetControlledTank() const
 //Turn the barrel towards the crosshair in the UI
 void ATankPlayerController::AimTowardCrosshair()
 {
-	if (!GetControlledTank()) { return; }
+	if (!ensure(GetControlledTank())) { return; }
 
 	FVector HitLocation; //OUT Parameter
 	if (GetSightRayHitLocation(HitLocation))

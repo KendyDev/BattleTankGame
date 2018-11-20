@@ -7,11 +7,22 @@
 #include "TankPlayerController.generated.h" //Must be the last include
 
 class ATank;
+class UTankAimingComponent;
 
+/*
+* Responsible to help the player aim
+*/
 UCLASS()
 class BATTLETANK_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
+
+protected:
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	ATank* GetControlledTank() const;
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
+	void FoundAimingComponent(UTankAimingComponent *AimingCompRef);
 
 private:
 
@@ -26,8 +37,6 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 	float LineTraceRange = 1000000;
-
-	ATank* GetControlledTank() const;
 
 	//Move barrrel to the crosshair
 	void AimTowardCrosshair();
