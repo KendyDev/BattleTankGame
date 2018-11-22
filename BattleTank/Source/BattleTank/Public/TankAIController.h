@@ -7,7 +7,6 @@
 #include "AIController.h"
 #include "TankAIController.generated.h"
 
-class ATank;
 
 /**
  * 
@@ -24,7 +23,6 @@ private:
 
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
-	ATank* GetControlledTank() const;
 
 
 };
