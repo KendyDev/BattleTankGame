@@ -24,6 +24,7 @@ void ATankPlayerController::Tick(float DeltaTime)
 //Turn the barrel towards the crosshair in the UI
 void ATankPlayerController::AimTowardCrosshair()
 {
+	if (!GetPawn()) { return; } //e.g not possessing
 	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if (!ensure(AimingComponent)) { return; }
 
