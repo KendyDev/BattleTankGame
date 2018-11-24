@@ -30,7 +30,6 @@ void UTankTrack::ApplySidewaysForce()
 }
 
 
-
 void UTankTrack::OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor, UPrimitiveComponent * OtherComponent, FVector NormalImpulse, const FHitResult & Hit)
 {
 	//Make sure physics does allow weird movement
