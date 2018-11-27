@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Particles/ParticleSystemComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Projectile.generated.h"
 
@@ -16,8 +17,6 @@ public:
 	// Sets default values for this actor's properties
 	AProjectile();
 
-	UProjectileMovementComponent* ProjectileMovement = nullptr;
-
 	void LaunchProjectile(float Speed);
 
 protected:
@@ -27,6 +26,13 @@ protected:
 private:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	UProjectileMovementComponent* ProjectileMovement = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UStaticMeshComponent *CollisionMesh = nullptr;
+
+	UParticleSystemComponent* LaunchBlast = nullptr;
 
 
 	
