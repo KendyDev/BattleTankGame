@@ -26,6 +26,9 @@ private:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION()
+	void OnPlayerDeath();
+
 	UPROPERTY(EditDefaultsOnly)
 	float CrossHairXLocation = 0.5f;
 
@@ -34,6 +37,8 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 	float LineTraceRange = 1000000;
+
+	virtual void SetPawn(APawn *InPawn) override;
 
 	//Move barrrel to the crosshair
 	void AimTowardCrosshair();

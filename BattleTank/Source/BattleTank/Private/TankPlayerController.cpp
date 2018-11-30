@@ -4,6 +4,7 @@
 #include "TankAimingComponent.h"
 #include "./BattleTank.h"
 #include "Engine/World.h"
+#include "Tank.h"
 
 void ATankPlayerController::BeginPlay()
 {
@@ -74,6 +75,26 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 	//Line trace didn't suceed
 	HitLocation = FVector(0);
 	return false;
+}
+
+//Make sure The tank is possessed by a Tank
+void ATankPlayerController::SetPawn(APawn *InPawn)
+{
+	Super::SetPawn(InPawn);
+	if (InPawn)
+	{
+		auto PossessedTank = Cast<ATank>(InPawn);
+		if (!ensure(PossessedTank)) { return; }
+
+		//Subscribe our local method to the tank's death event
+		PossessedTank->OnDeath.AddUniqueDynamic(this, &ATankPlayerController::OnPlayerDeath);
+
+	}
+}
+
+void ATankPlayerController::OnPlayerDeath()
+{
+	StartSpectatingOnly();
 }
 
 
