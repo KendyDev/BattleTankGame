@@ -3,8 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "SprungWheel.h"
 #include "Components/StaticMeshComponent.h"
 #include "TankTrack.generated.h"
+
 
 /**
  * 
@@ -17,16 +19,9 @@ class BATTLETANK_API UTankTrack : public UStaticMeshComponent
 private:
 	UTankTrack();
 
-	virtual void BeginPlay() override;
+	TArray<ASprungWheel*> GetWheels() const;
 
-	float CurrentThrottle = 0;
-
-	UFUNCTION(BlueprintCallable, Category = Input)
-	void OnHit(UPrimitiveComponent* HitComponent, AActor *OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult &Hit);
-
-	void ApplySidewaysForce();
-
-	void DriveTrack();
+	void DriveTrack(float CurrentThrottle);
 
 public:
 	//Sets a throttle between -1 and + 1
